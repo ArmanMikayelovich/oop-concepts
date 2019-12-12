@@ -25,7 +25,8 @@ public class Start {
                     "3. See company profile\n" +
                     "4. Fire employee\n" +
                     "5. Add task to employee\n" +
-                    "6. delete task from employee's task list");
+                    "6. delete task from employee's task list\n" +
+                    "7. Get reprimands' report.");
             System.out.println("Type 'exit' for close.");
             String next = scanner.next();
             try {
@@ -56,6 +57,10 @@ public class Start {
                     }
                     case 6: {
                         taskService.deleteTaskFromUser(employeeMap, scanner);
+                        break;
+                    }
+                    case 7: {
+                        superVisorService.reportReprimandsFromConcreteSuperVisor(employeeMap, scanner);
                         break;
                     }
                     default: {

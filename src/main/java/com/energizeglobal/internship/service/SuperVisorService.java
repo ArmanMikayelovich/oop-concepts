@@ -33,4 +33,23 @@ public class SuperVisorService {
 
     }
 
+    public String reportReprimandsFromConcreteSuperVisor(Map<Integer, Employee> company, Scanner scanner) {
+        System.out.println("Input supervisor id.");
+
+        try {
+            int superVisorId = scanner.nextInt();
+            if (superVisorId >= 0 && superVisorId < company.size()
+                    && company.get(superVisorId) instanceof SuperVisor) {
+                SuperVisor superVisor = (SuperVisor) company.get(superVisorId);
+                return superVisor.reportReprimands();
+            } else {
+                System.out.println("Invalid SuperVisor id");
+            }
+        } catch (Exception ex) {
+            System.out.println("Unknown exception throw. operation stopped.");
+        }
+        return null;
+
+    }
 }
+
