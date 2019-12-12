@@ -1,6 +1,6 @@
 package com.energizeglobal.internship.util;
 
-public enum EmployeeRole {
+public enum OfficeWorkerRole {
     SOFTWARE_DEVELOPER,
     BUSINESS_ANALYTIC,
     QA_ENGINEER,

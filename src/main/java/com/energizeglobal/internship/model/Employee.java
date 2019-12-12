@@ -1,7 +1,7 @@
 package com.energizeglobal.internship.model;
 
-import com.energizeglobal.internship.util.EmployeeRole;
 import com.energizeglobal.internship.util.JsonMapper;
+import com.energizeglobal.internship.util.exception.JsonParseException;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
@@ -10,22 +10,31 @@ import java.util.HashMap;
 import java.util.Map;
 
 public abstract class Employee {
+    private static int idSequence = 0;
+    private int id;
     private String firstName;
     private String lastName;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     private Date dateOfBirth;
     private Integer salary;
-    private EmployeeRole employeeRole;
     protected Map<String, String> tasks = new HashMap<>();
 
     public Employee(String firstName, String lastName,
-                    Date dateOfBirth, EmployeeRole employeeRole,
+                    Date dateOfBirth,
                     Integer salary) {
+        this.id = idSequence++;
         this.firstName = firstName;
         this.lastName = lastName;
         this.dateOfBirth = dateOfBirth;
         this.salary = salary;
-        this.employeeRole = employeeRole;
+    }
+
+    public Map<String, String> getTasks() {
+        return tasks;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public void addTask(String taskCode, String description) {
@@ -72,20 +81,12 @@ public abstract class Employee {
         this.salary = salary;
     }
 
-    public EmployeeRole getEmployeeRole() {
-        return employeeRole;
-    }
-
-    public void setEmployeeRole(EmployeeRole employeeRole) {
-        this.employeeRole = employeeRole;
-    }
-
     @Override
     public String toString() {
         try {
             return JsonMapper.getInstance().writerWithDefaultPrettyPrinter().writeValueAsString(this);
         } catch (JsonProcessingException e) {
-            throw new RuntimeException("Can't parse object to json format.");
+            throw new JsonParseException("Can't parse object to json format.", e);
         }
     }
 }
